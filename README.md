@@ -92,6 +92,8 @@ Plans for what I'm going to do (this is being written at the start)
   * Drawn from the model
   * Dataset.to(:json), etc., with metaprogramming for Dataset.to_json
   * sent with send_file, disposition download, suggest filename
+  * probably not cacheing the result
+    ** but maybe a serialized field with the hash would not be so bad 
 * in real life would perhaps require background processing, probably skipping that.
   * but I've done it before, so maybe not ;)
   * Resque/Sidekick/delayed_job
