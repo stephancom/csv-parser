@@ -2,7 +2,7 @@ Csv Parser
 ================
 
 [![Deploy to Heroku](https://www.herokucdn.com/deploy/button.png)](https://heroku.com/deploy)
-
+[![Build Status](https://travis-ci.org/stephancom/csv-parser.svg?branch=master)](https://travis-ci.org/stephancom/csv-parser)
 This application was built in fulfillment of a code test, spec as follows:
 
 # Stock Items Importer / Exporter

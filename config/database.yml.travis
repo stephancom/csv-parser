@@ -1,0 +1,11 @@
+# database.yml for use with TravisCI
+
+test:
+  adapter:  postgresql
+  host:     localhost
+  encoding: unicode
+  database: travis_ci_test
+  pool:     5
+  username: postgres
+  password:
+  template: template0
