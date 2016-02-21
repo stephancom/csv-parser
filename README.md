@@ -109,6 +109,23 @@ Learn more about [Installing Rails](http://railsapps.github.io/installing-rails.
 Getting Started
 ---------------
 
+= Local setup
+
+* clone repository
+* bundle
+* set up database.yml
+* rake db:setup
+
+= Heroku setup steps
+
+```
+heroku create [OPTIONAL SERVER NAME]
+git push heroku master
+heroku run rake db:migrate
+heroku run rake db:seed
+heroku open
+```
+
 Documentation and Support
 -------------------------
 
