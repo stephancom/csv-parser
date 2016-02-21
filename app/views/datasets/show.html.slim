@@ -1,0 +1,12 @@
+p#notice = notice
+
+p
+  strong Title:
+  = @dataset.title
+p
+  strong Csv data:
+  = @dataset.csv_data
+
+= link_to 'Edit', edit_dataset_path(@dataset)
+'|
+= link_to 'Back', datasets_path
