@@ -19,6 +19,7 @@ gem 'pg'
 gem 'puma'
 gem 'simple_form'
 gem 'slim-rails'
+gem 'responders'
 group :development do
   gem 'better_errors'
   gem 'guard-bundler'
