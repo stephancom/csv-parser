@@ -78,22 +78,23 @@ I decided to make this a full Rails app primarily because it's more convenient f
 
 Plans for what I'm going to do (this is being written at the start)
 * DSL for describing parsing/output
-** extensible architecture, fields provided include
-*** id (unique integer)
-*** integer
-*** currency (i18n? yeah, right, TODO)
-*** string
-*** "mutable price"? (includes price/cost/type)
+  * extensible architecture, fields provided include
+    * id (unique integer)
+    * integer
+    * currency (i18n? yeah, right, TODO)
+    * string
+    * "mutable price"? (includes price/cost/type)
+  * selectable parser on input
 * Some validation of input
-** possibly saving invalid rows to a "failures" field?
-** or trying to match/correct malformed input? naah.
+  * possibly saving invalid rows to a "failures" field?
+  * or trying to match/correct malformed input? naah.
 * XML and YAML format in addition to JSON.  
-** Drawn from the model
-*** Dataset.to(:json), etc., with metaprogramming for Dataset.to_json
-** sent with send_file, disposition download, suggest filename
+  * Drawn from the model
+  * Dataset.to(:json), etc., with metaprogramming for Dataset.to_json
+  * sent with send_file, disposition download, suggest filename
 * in real life would perhaps require background processing, probably skipping that.
-** but I've done it before, so maybe not ;)
-** Resque/Sidekick/delayed_job
+  * but I've done it before, so maybe not ;)
+  * Resque/Sidekick/delayed_job
 
 Ruby on Rails
 -------------
