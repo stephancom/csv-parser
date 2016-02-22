@@ -1,8 +1,17 @@
+require "CSV"
 class Dataset < ActiveRecord::Base
-  include ActionView::Helpers::TextHelper
+  include ActionView::Helpers::TextHelper # handy for description
 
   validates :csv_data, presence: true
 
+  # parsing
+  def parsed_data
+    @parsed_data ||= CSV.parse(csv_data, headers: true).map(&:to_hash)
+  end
+
+  # handy helpers - some might argue these belong in helpers for use in the view
+  # but I find it useful to keep them in the model so they can be used elsewhere
+  # eg rake tasks, etc.
   def field_names
     csv_data.lines.first.split(',')
   end

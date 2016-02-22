@@ -31,8 +31,60 @@ RSpec.describe Dataset, type: :model do
     describe "description" do
       subject { dataset.description }
 
-      it { should match(/#{fields_count} fields/i) }
-      it { should match(/#{rows_count} rows/i) }
+      it { is_expected.to match(/#{fields_count} fields/i) }
+      it { is_expected.to match(/#{rows_count} rows/i) }
+    end
+  end
+
+  describe "csv parsing" do
+    shared_examples "it has the right format" do
+      it "should be an array" do
+        expect(parsed_data).to be_instance_of(Array)
+      end
+      it "should contain hashes" do
+        expect(parsed_data).to all( be_instance_of(Hash) )
+      end
+      it "should contain the correct number of elements" do
+        expect(parsed_data.count).to eq(dataset.rows_count)
+      end
+      it "should have the right keys in every row" do
+        expect(parsed_data.map(&:keys)).to all( match_array(output_keys) )
+      end
+    end
+    describe "random data" do
+      let(:fields_count) { 4 }
+      let(:rows_count) { 6 }
+      let(:dataset) { FactoryGirl.create :dataset, csv_data: random_csv(fields_count, rows_count, "Parse%d") }
+
+      describe "with simple parsing" do
+        let(:parsed_data) { dataset.parsed_data }
+        let(:output_keys) { %w(Parse1 Parse2 Parse3 Parse4)}
+
+        it_behaves_like "it has the right format"
+      end
+    end
+    describe "data provided in spec" do
+      let(:fields_count) { 12 }
+      let(:rows_count) { 14 }
+      before(:all) do
+        csv_data = IO.read(Rails.root.join("spec", "fixtures", "stock_items.csv"))
+        @dataset = FactoryGirl.create :dataset, csv_data: csv_data
+      end
+
+      describe "with simple parsing" do
+        let(:dataset) { @dataset }
+        let(:parsed_data) { dataset.parsed_data }
+        let(:output_keys) { [
+          "item id", "description",
+          "price", "cost", "price_type",
+          "quantity_on_hand",
+          "modifier_1_name", "modifier_1_price",
+          "modifier_2_name", "modifier_2_price",
+          "modifier_3_name", "modifier_3_price",
+        ] }
+
+        it_behaves_like "it has the right format"
+      end
     end
   end
 end
