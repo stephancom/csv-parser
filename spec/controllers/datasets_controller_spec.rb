@@ -24,11 +24,11 @@ RSpec.describe DatasetsController, type: :controller do
   # Dataset. As you add validations to Dataset, be sure to
   # adjust the attributes here as well.
   let(:valid_attributes) {
-    skip("Add a hash of attributes valid for your model")
+    {csv_data: random_csv}
   }
 
   let(:invalid_attributes) {
-    skip("Add a hash of attributes invalid for your model")
+    {csv_data: ''}
   }
 
   # This should return the minimal set of values that should be in the session
@@ -103,14 +103,13 @@ RSpec.describe DatasetsController, type: :controller do
   describe "PUT #update" do
     context "with valid params" do
       let(:new_attributes) {
-        skip("Add a hash of attributes valid for your model")
+        {csv_data: random_csv}
       }
 
       it "updates the requested dataset" do
         dataset = Dataset.create! valid_attributes
         put :update, {:id => dataset.to_param, :dataset => new_attributes}, valid_session
         dataset.reload
-        skip("Add assertions for updated state")
       end
 
       it "assigns the requested dataset as @dataset" do

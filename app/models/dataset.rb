@@ -1,8 +1,13 @@
 class Dataset < ActiveRecord::Base
   include ActionView::Helpers::TextHelper
 
+  validates :csv_data, presence: true
+
+  def field_names
+    csv_data.lines.first.split(',')
+  end
   def fields_count
-    csv_data.lines.first.split(',').count
+    field_names.count
   end
   def rows_count
     csv_data.lines.count-1 # subtract 1 to remove header
