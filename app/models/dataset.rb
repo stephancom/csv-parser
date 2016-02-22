@@ -1,4 +1,4 @@
-require "CSV"
+require 'csv'
 class Dataset < ActiveRecord::Base
   include ActionView::Helpers::TextHelper # handy for description
 
