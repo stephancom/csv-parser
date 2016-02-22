@@ -11,12 +11,10 @@ class Dataset < ActiveRecord::Base
   validates :transformer, presence: true, inclusion: {in: AVAILABLE_TRANSFORMERS.keys} 
 
   after_initialize :set_default_transformer
-  after_create :create_importer
-  after_create :create_transformer
 
   # parsing
   def parsed_data
-    trader = DataTrader::Agent.new @importer, transformer: @transformer
+    trader = DataTrader::Agent.new get_importer, get_transformer: transformer
     @parsed_data ||= trader.trade
   end
 
@@ -42,11 +40,11 @@ class Dataset < ActiveRecord::Base
     self.transformer ||= AVAILABLE_TRANSFORMERS.keys.first if new_record?
   end
 
-  def create_importer
-    @importer = DataTrader::Importer::CSVImporter.new(csv_data)
+  def get_importer
+    @get_importer = DataTrader::Importer::CSVImporter.new(csv_data)
   end
 
-  def create_transformer
-    @transformer = AVAILABLE_TRANSFORMERS[transformer].new
+  def get_transformer
+    @get_transformer = AVAILABLE_TRANSFORMERS[transformer].new
   end
 end

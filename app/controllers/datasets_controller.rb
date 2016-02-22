@@ -1,7 +1,7 @@
 class DatasetsController < ApplicationController
   before_action :set_dataset, only: [:show, :edit, :update, :destroy]
 
-  respond_to :html
+  respond_to :html, :json
 
   def index
     @datasets = Dataset.all
@@ -9,7 +9,12 @@ class DatasetsController < ApplicationController
   end
 
   def show
-    respond_with(@dataset)
+    # TODO - fix this quickie hack
+    if params[:format] and params[:format].upcase == 'JSON'
+      send_data @dataset.parsed_data, type: 'application/json', disposition: 'attachment', filename: "dataset.json"
+    else    
+      respond_with(@dataset)
+    end
   end
 
   def new
