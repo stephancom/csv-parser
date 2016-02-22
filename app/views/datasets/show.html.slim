@@ -1,12 +1,12 @@
-p#notice = notice
+- content_for :title, @dataset.title
+.row
+  .col-sm-12
+    h1 "#{@dataset.title}" Dataset
 
-p
-  strong Title:
-  = @dataset.title
-p
-  strong Csv data:
-  = @dataset.csv_data
+    .form-group
+      label for=:csv_data CSV Data
+      textarea.form-control rows=[@dataset.rows_count, 15].max readonly=:readonly = @dataset.csv_data
 
-= link_to 'Edit', edit_dataset_path(@dataset)
-'|
-= link_to 'Back', datasets_path
+    = link_to 'Edit', edit_dataset_path(@dataset)
+    '|
+    = link_to 'Back', datasets_path
