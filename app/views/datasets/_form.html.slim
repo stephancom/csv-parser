@@ -1,0 +1,9 @@
+= simple_form_for(@dataset) do |f|
+  = f.error_notification
+
+  .form-inputs
+    = f.input :title
+    = f.input :csv_data
+
+  .form-actions
+    = f.button :submit

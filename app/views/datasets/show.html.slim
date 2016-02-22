@@ -1,0 +1,34 @@
+- content_for :title, @dataset.title
+.row
+  .col-sm-12
+    h1 "#{@dataset.title}" Dataset
+
+    ul.nav.nav-tabs role="tablist" 
+      li.active role="presentation" 
+        a aria-controls="tabular" data-toggle="tab" href="#tabular" role="tab"  tabular
+      li role="presentation" 
+        a aria-controls="raw" data-toggle="tab" href="#raw" role="tab"  raw
+
+    .tab-content
+
+      #tabular.tab-pane.active role="tabpanel"
+        .table-responsive
+          table.table.table-bordered.table-condensed.table-hover
+            thead
+              tr
+                - @dataset.field_names.each do |field|
+                  th= field
+            tbody
+              - @dataset.csv_data.lines[1..-1].each do |row|
+                tr
+                  - row.split(',').each do |data|
+                    td= data
+
+      #raw.tab-pane role="tabpanel"
+        .form-group
+          label for=:csv_data CSV Data
+          textarea.form-control rows=[@dataset.rows_count, 15].max readonly=:readonly = @dataset.csv_data
+
+    = link_to 'Edit', edit_dataset_path(@dataset)
+    '|
+    = link_to 'Back', datasets_path

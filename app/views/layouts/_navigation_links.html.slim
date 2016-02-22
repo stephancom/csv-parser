@@ -1,0 +1,3 @@
+/ add navigation links to this file
+
+li(class= ('active' if controller.controller_name == 'datasets'))= link_to "Datasets (#{Dataset.count})", datasets_path
