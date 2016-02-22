@@ -4,8 +4,8 @@ module DataTrader
   class Agent
     def initialize(importer, args={})
       @importer = importer
-      @transformer = args[:transformer] || Transformer::Base
-      @presenter = args[:presenter] || Presenter::Base
+      @transformer = args[:transformer] || Transformer::Base.new
+      @presenter = args[:presenter] || Presenter::Base.new
     end
 
     def trade
@@ -44,32 +44,51 @@ module DataTrader
     end
   end
 
-  # transformer modules must implement a transform_row class method
+  # transformer modules must implement a transform_row method
   # which takes a hash as input and returns a different hash
   module Transformer  
     class Base
-      def self.transform_row(row)
+      def transform_row(row)
         row
       end
     end
   end
 
-  # presenter modules accept an array of hashes at initialization
-  # they must implement a "present" class method which accepts
+  # presenter modules must implement a "present" method which accepts
   # an array of hashes and returns or does whatever is expected
   # e.g. a JSONpresenter returns a JSON string
-  # another presenter might create records, etc.
   module Presenter
     class Base
-      def self.present(hashes)
+      def present(hashes)
         hashes
       end
     end
 
     class JSONPresenter < Base
-      def self.present
+      def present(hashes)
         hashes.to_json
       end
     end
+
+    # just a sketch.  It expects a class that has a create class method
+    # (for example, an ActiveRecord model) and calls create for each
+    # row with the hash for that row
+    # typical usage:
+     
+    # @importer = DataTrader::Importer::CSVImporter.new(csv_data)
+    # @transformer = DataTrader::Transformer::User.new(require_email: true)
+    # @presenter = DataTrader::Presenter::RecordCreatorPresenter.new(User)
+    # trader = DataTrader::Agent.new @importer
+    # trader.trade     
+    class RecordCreatorPresenter < Base
+      def initialize(target_class)
+        @target_class
+      end
+      def present(hashes)
+        hashes.each do |params|
+          @target_class.create params
+        end
+      end
+    end   
   end
 end

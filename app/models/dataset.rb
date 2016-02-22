@@ -2,14 +2,22 @@ require 'csv'
 class Dataset < ActiveRecord::Base
   include ActionView::Helpers::TextHelper # handy for description
 
-  validates :csv_data, presence: true
+  AVAILABLE_TRANSFORMERS = {
+    'plain' => DataTrader::Transformer::Base,
+    'stock_item' => StockItemTransformer
+  }
 
+  validates :csv_data, presence: true
+  validates :transformer, presence: true, inclusion: {in: AVAILABLE_TRANSFORMERS.keys} 
+
+  after_initialize :set_default_transformer
   after_create :create_importer
+  after_create :create_transformer
 
   # parsing
   def parsed_data
-    trader = DataTrader::Agent.new @importer
-    @parsed_data ||= trader.trade #CSV.parse(csv_data, headers: true).map(&:to_hash)
+    trader = DataTrader::Agent.new @importer, transformer: @transformer
+    @parsed_data ||= trader.trade
   end
 
   # handy helpers - some might argue these belong in helpers for use in the view
@@ -30,7 +38,15 @@ class Dataset < ActiveRecord::Base
 
   private
 
+  def set_default_transformer
+    self.transformer ||= AVAILABLE_TRANSFORMERS.keys.first if new_record?
+  end
+
   def create_importer
     @importer = DataTrader::Importer::CSVImporter.new(csv_data)
+  end
+
+  def create_transformer
+    @transformer = AVAILABLE_TRANSFORMERS[transformer].new
   end
 end

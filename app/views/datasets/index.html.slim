@@ -7,6 +7,7 @@
         tr
           th Title
           th Csv data
+          th Format
           th
           th
           th
@@ -16,6 +17,7 @@
           tr
             td = dataset.title
             td = dataset.description
+            td = dataset.transformer
             td = link_to 'Show', dataset
             td = link_to 'Edit', edit_dataset_path(dataset)
             td = link_to 'Destroy', dataset, data: {:confirm => 'Are you sure?'}, :method => :delete
