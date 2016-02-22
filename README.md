@@ -1,4 +1,4 @@
-Csv Parser
+Csv Parser _(Incomplete - work in progress)_
 ================
 
 [![Deploy to Heroku](https://www.herokucdn.com/deploy/button.png)](https://heroku.com/deploy)
