@@ -1,5 +1,34 @@
 require 'csv'
 module DataTrader
+
+  class Agent
+    def initialize(importer, args={})
+      @importer = importer
+      @transformer = args[:transformer] || Transformer::Base
+      @presenter = args[:presenter] || Presenter::Base
+    end
+
+    def trade
+      transformed = rows.map { |r| @transformer.transform_row(r) }
+      @presenter.present(transformed)
+    end
+
+    private
+
+    def rows
+      @importer.rows
+    end
+  end
+
+  # IMPORTANT NOTE:
+  # I would prefer to put all these supporting modules in separate files
+  # eg data_trader/transformer/base.rb
+  # for some reason, this causes a LoadError on SOME rspec tests - which ones
+  # depends on the test order when you use random order, for example:
+  # Unable to autoload constant Transformer::Base, expected xxxxxxx/lib/data_trader/transformer/base.rb to define it
+  # this may be related to FactoryGirl and/or Spring.  I wasted an hour or two trying to find a solution.
+
+
   # importer modules must implement a rows method returning an array of hashes
   # or at least some sort of enumerable that returns hashes
   # they typically accept as input a string of data, but this need not be so
@@ -41,25 +70,6 @@ module DataTrader
       def self.present
         hashes.to_json
       end
-    end
-  end
-
-  class Agent
-    def initialize(importer, args={})
-      @importer = importer
-      @transformer = args[:transformer] || Transformer::Base
-      @presenter = args[:presenter] || Presenter::Base
-    end
-
-    def trade
-      transformed = rows.map { |r| @transformer.transform_row(r) }
-      @presenter.present(transformed)
-    end
-
-    private
-
-    def rows
-      @importer.rows
     end
   end
 end
