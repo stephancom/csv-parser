@@ -4,9 +4,12 @@ class Dataset < ActiveRecord::Base
 
   validates :csv_data, presence: true
 
+  after_create :create_importer
+
   # parsing
   def parsed_data
-    @parsed_data ||= CSV.parse(csv_data, headers: true).map(&:to_hash)
+    trader = DataTrader::Agent.new @importer
+    @parsed_data ||= trader.trade #CSV.parse(csv_data, headers: true).map(&:to_hash)
   end
 
   # handy helpers - some might argue these belong in helpers for use in the view
@@ -23,5 +26,11 @@ class Dataset < ActiveRecord::Base
   end
   def description
     [pluralize( fields_count, 'field' ), pluralize( rows_count, 'rows' ) ].to_sentence
+  end
+
+  private
+
+  def create_importer
+    @importer = DataTrader::Importer::CSVImporter.new(csv_data)
   end
 end
