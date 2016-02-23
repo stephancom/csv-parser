@@ -5,19 +5,21 @@ class StockItemTransformer < DataTrader::Transformer::Base
     @modifiers_count = modifiers_count
   end
 
-  def extract_modifier(row, n)
+  def nth_modifier(row, n)
     {"name" => row["modifier_#{n}_name"], "price" => row["modifier_#{n}_price"]}
+  end
+
+  # returns an array of modifiers
+  def extract_modifiers(row)
+    (1..@modifiers_count).inject([]) do |mods, n|
+      mods << nth_modifier(row, n)
+    end
   end
 
   def transform_row(row)
     row.slice(*UNCHANGED_KEYS).tap do |item|
       item['id'] = row["item id"]
-      item['modifiers'] = [].tap do |modifiers|
-        # puts item['modifiers']
-        (1..@modifiers_count).map { |n| extract_modifier(row, n) } .each do |modifier|
-          modifiers << modifier unless modifier.values.all?(&:blank?)
-        end
-      end
+      item['modifiers'] = extract_modifiers(row)
     end
   end
 end
