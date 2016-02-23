@@ -1,20 +1,22 @@
+require "json"
 require 'csv'
 class Dataset < ActiveRecord::Base
   include ActionView::Helpers::TextHelper # handy for description
 
+  DEFAULT_TRANSFORMER = 'plain'
   AVAILABLE_TRANSFORMERS = {
     'plain' => DataTrader::Transformer::Base,
     'stock_item' => StockItemTransformer
   }
 
   validates :csv_data, presence: true
-  validates :transformer, presence: true, inclusion: {in: AVAILABLE_TRANSFORMERS.keys} 
+  validates :transformer, presence: true, inclusion: {in: AVAILABLE_TRANSFORMERS.keys}
 
   after_initialize :set_default_transformer
 
   # parsing
   def parsed_data
-    trader = DataTrader::Agent.new get_importer, get_transformer: transformer
+    trader = DataTrader::Agent.new get_importer, transformer: get_transformer
     @parsed_data ||= trader.trade
   end
 
@@ -37,7 +39,7 @@ class Dataset < ActiveRecord::Base
   private
 
   def set_default_transformer
-    self.transformer ||= AVAILABLE_TRANSFORMERS.keys.first if new_record?
+    self.transformer ||= DEFAULT_TRANSFORMER if new_record?
   end
 
   def get_importer

@@ -71,6 +71,14 @@ item id,description,price,cost,price_type,quantity_on_hand,modifier_1_name,modif
 ]
 ```
 
+#### IMPORTANT
+
+> The provided JSON as shown above is not valid.  
+> Keys must be quoted, quotes must be double, and it's null, not nil.  
+> Corrected version found in spec/fixtures/two_stock_items.json
+> helpful resource: http://pro.jsonlint.com
+
+
 Development Notes
 -------------
 
