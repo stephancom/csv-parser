@@ -106,6 +106,14 @@ Plans for what I'm going to do (this is being written at the start)
   * but I've done it before, so maybe not ;)
   * Resque/Sidekick/delayed_job
 
+==== TODO
+* DSL
+* validation, kick out rejected records into an array for review
+* cache result
+* XML/YAML
+* background processing
+* parse money fields                                                                                                                                                                                                                                       
+
 Ruby on Rails
 -------------
 
