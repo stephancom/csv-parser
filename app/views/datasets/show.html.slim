@@ -7,13 +7,16 @@
       | Transform with 
       i= @dataset.transformer.titleize
 
-    h3 
-      | Download 
-
+    .btn-group.pull-right role="group" 
       == link_to dataset_path(@dataset, format: :json), class: %w(btn btn-primary) do
         | JSON &emsp;
         i.glyphicon.glyphicon-download-alt
-      i  NOTE: Correct format not yet implemented!!
+      == link_to dataset_path(@dataset, format: :xml), class: %w(btn btn-primary) do
+        | XML &emsp;
+        i.glyphicon.glyphicon-download-alt
+      == link_to dataset_path(@dataset, format: :yaml), class: %w(btn btn-primary) do
+        | YAML &emsp;
+        i.glyphicon.glyphicon-download-alt
 
     ul.nav.nav-tabs role="tablist" 
       li.active role="presentation" 
