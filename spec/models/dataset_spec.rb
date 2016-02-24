@@ -125,11 +125,8 @@ RSpec.describe Dataset, type: :model do
         let(:parsed_data) { dataset.parsed_data }
         let(:expected_json) { JSON.parse(IO.read(Rails.root.join("spec", "fixtures", "two_stock_items.json"))) }
         let(:output_keys) {["id", "description", "price", "cost", "price_type", "quantity_on_hand", "modifiers"]}
-        # before(:all) do
-        #   csv_data = IO.read(Rails.root.join("spec", "fixtures", "stock_items.csv"))
-        #   @dataset = FactoryGirl.create :dataset, csv_data: csv_data, transformer: :stock_item
-        # end
 
+        # just making sure I read the fixture right
         describe "the text fixture" do
           it "should have multiple records" do
             expect(expected_json.size).to be >= 2
@@ -158,14 +155,14 @@ RSpec.describe Dataset, type: :model do
             end
           end          
         end
-        # describe "the resulting data" do
-        #   it "should have the right keys in the first record" do
-        #     expect(parsed_data.first.keys).to match_array(output_keys)
-        #   end
-        #   xit "should have the right keys" do
-        #     expect(parsed_data.map(&:keys)).to all(match_array(output_keys))
-        #   end
-        # end
+        describe "the resulting data" do
+          it "should have the right keys in the first record" do
+            expect(parsed_data.first.keys).to match_array(output_keys)
+          end
+          it "should have the right keys" do
+            expect(parsed_data.map(&:keys)).to all(match_array(output_keys))
+          end
+        end
       end
 
       describe "with builder presenter" do
