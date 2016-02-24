@@ -1,3 +1,20 @@
+# sketch for DSL version of this:
+
+# DataTrader::Transformer.define do
+#   transformer :stock_items do
+#     integer :id, source: :item_id, unique: true
+#     string :description
+#     currency :price
+#     currency :cost
+#     string :price_type, in: $w(system open)
+#     integer :quantity_on_hand
+#     children :modifiers do |n|
+#       string :name, source: "modifier_%d_name"
+#       currency :price, source: "modifier_%d_price"
+#     end
+#   end
+# end
+
 class StockItemTransformer < DataTrader::Transformer::Base
   UNCHANGED_KEYS = ["cost", "description", "price", "price_type", "quantity_on_hand"]
 
