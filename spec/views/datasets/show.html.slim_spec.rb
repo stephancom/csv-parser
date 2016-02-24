@@ -5,6 +5,7 @@ RSpec.describe "datasets/show", type: :view do
     @csv_data = random_csv(5, 8)
     @dataset = assign(:dataset, Dataset.create!(
       :title => "Title",
+      :transformer => 'stock_item',
       :csv_data => @csv_data
     ))
   end
@@ -12,6 +13,7 @@ RSpec.describe "datasets/show", type: :view do
   it "renders attributes" do
     render
     expect(rendered).to match(/Title/)
+    expect(rendered).to match(/Stock Item/)
     expect(rendered).to match(@csv_data)
     assert_select "textarea", :text => @csv_data, :count => 1
   end
@@ -23,4 +25,6 @@ RSpec.describe "datasets/show", type: :view do
     assert_select "table>tbody>tr", count: 8
     assert_select "table>tbody>tr>td", count: 5*8
   end
+
+  it "needs to test format downloads"
 end

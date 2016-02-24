@@ -71,6 +71,14 @@ item id,description,price,cost,price_type,quantity_on_hand,modifier_1_name,modif
 ]
 ```
 
+#### IMPORTANT
+
+> The provided JSON as shown above is not valid.  
+> Keys must be quoted, quotes must be double, and it's null, not nil.  
+> Corrected version found in spec/fixtures/two_stock_items.json
+> helpful resource: http://pro.jsonlint.com
+
+
 Development Notes
 -------------
 
@@ -88,15 +96,17 @@ Plans for what I'm going to do (this is being written at the start)
 * Some validation of input
   * possibly saving invalid rows to a "failures" field?
   * or trying to match/correct malformed input? naah.
-* XML and YAML format in addition to JSON.  
-  * Drawn from the model
-  * Dataset.to(:json), etc., with metaprogramming for Dataset.to_json
-  * sent with send_file, disposition download, suggest filename
-  * probably not cacheing the result
-    ** but maybe a serialized field with the hash would not be so bad 
 * in real life would perhaps require background processing, probably skipping that.
   * but I've done it before, so maybe not ;)
   * Resque/Sidekick/delayed_job
+
+==== TODO
+* DSL
+* validation, kick out rejected records into an array for review
+* cache result
+* background processing
+* parse money fields
+* clean up DataTrader library
 
 Ruby on Rails
 -------------

@@ -3,6 +3,7 @@
 
   .form-inputs
     = f.input :title
+    = f.input :transformer, collection: Dataset::AVAILABLE_TRANSFORMERS.keys, include_blank: 'Choose one:'
     = f.input :csv_data
 
   .form-actions

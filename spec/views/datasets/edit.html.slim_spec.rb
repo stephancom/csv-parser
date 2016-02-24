@@ -15,6 +15,8 @@ RSpec.describe "datasets/edit", type: :view do
 
       assert_select "input#dataset_title[name=?]", "dataset[title]"
 
+      assert_select "select#dataset_transformer[name=?]", "dataset[transformer]"
+
       assert_select "textarea#dataset_csv_data[name=?]", "dataset[csv_data]"
     end
   end
