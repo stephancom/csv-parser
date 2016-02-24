@@ -15,6 +15,18 @@
 #   end
 # end
 
+# references/resources for DSL
+# https://robots.thoughtbot.com/writing-a-domain-specific-language-in-ruby
+# https://www.leighhalliday.com/creating-ruby-dsl
+# http://radar.oreilly.com/2014/04/make-magic-with-ruby-dsls.html
+# http://yonkeltron.com/blog/2010/05/13/creating-a-ruby-dsl/
+# http://engineering.gusto.com/benefits-of-writing-a-dsl/
+# https://blog.atechmedia.com/ruby-dsls-for-fun/
+# http://stackoverflow.com/questions/4936146/tutorials-for-writing-dsl-in-ruby
+# https://shvets.github.io/blog/2013/11/16/two_simple_ruby_dsl_examples.html
+# http://blog.pitr.ch/blog/2013/05/17/htmless-fast-extensible-html5-builder-in-pure-ruby/
+# https://github.com/ms-ati/docile
+
 class StockItemTransformer < DataTrader::Transformer::Base
   UNCHANGED_KEYS = ["cost", "description", "price", "price_type", "quantity_on_hand"]
 
