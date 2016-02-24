@@ -105,7 +105,6 @@ Plans for what I'm going to do (this is being written at the start)
 * validation, kick out rejected records into an array for review
 * cache result
 * background processing
-* parse money fields
 * clean up DataTrader library
 
 Ruby on Rails
