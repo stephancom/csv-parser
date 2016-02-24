@@ -9,6 +9,7 @@ html
     == javascript_include_tag 'application', 'data-turbolinks-track' => true
     == csrf_meta_tags
   body
+    == render 'layouts/github_ribbon'
     header
       == render 'layouts/navigation'
     main[role="main"]
